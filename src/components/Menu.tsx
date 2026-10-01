@@ -26,7 +26,7 @@ export default function Menu({ email }: { email: string }) {
           Clientes
         </NavLink>
         <NavLink to="/usuarios" className={classeLink}>
-          Usuários
+          ADM
         </NavLink>
 
         <div className="ml-auto flex items-center gap-3">
