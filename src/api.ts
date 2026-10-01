@@ -195,3 +195,32 @@ export async function excluirUsuario(id: string) {
   const { error } = await supabase.rpc('excluir_usuario', { p_id: id })
   if (error) throw tratarErro(error)
 }
+
+// ---------- financeiro ----------
+
+export type ServicoEntregue = {
+  id: string
+  numero: number
+  valor_final: number | null
+  forma_pagamento: string | null
+  entregue_em: string
+  servico_realizado: string | null
+  aparelho: { tipo: string; marca: string; modelo: string; cliente: { nome: string } }
+}
+
+// OS entregues dentro do mês (mes no formato "2026-10")
+export async function listarEntreguesDoMes(mes: string) {
+  const [ano, numeroMes] = mes.split('-').map(Number)
+  const inicio = new Date(ano, numeroMes - 1, 1)
+  const fim = new Date(ano, numeroMes, 1) // primeiro dia do mês seguinte
+
+  const { data, error } = await supabase
+    .from('ordens_servico')
+    .select('id, numero, valor_final, forma_pagamento, entregue_em, servico_realizado, aparelho:aparelhos(tipo, marca, modelo, cliente:clientes(nome))')
+    .eq('status', 'entregue')
+    .gte('entregue_em', inicio.toISOString())
+    .lt('entregue_em', fim.toISOString())
+    .order('entregue_em', { ascending: false })
+  if (error) throw tratarErro(error)
+  return data as unknown as ServicoEntregue[]
+}

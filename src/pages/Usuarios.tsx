@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { criarUsuario, excluirUsuario, listarUsuarios, trocarSenhaUsuario, type Usuario } from '../api'
+import HistoricoServicos from '../components/HistoricoServicos'
 import Modal from '../components/Modal'
 import { dataHora } from '../utils'
 
@@ -174,6 +175,9 @@ export default function Usuarios() {
           </div>
         </div>
       </div>
+
+      <hr className="my-8 border-gray-300" />
+      <HistoricoServicos />
 
       {trocando && (
         <Modal titulo={'Trocar senha de ' + trocando.usuario} fechar={() => setTrocando(null)}>

@@ -14,6 +14,7 @@ do curso de Análise e Desenvolvimento de Sistemas.
 - Histórico das mudanças de status
 - Comprovante de entrada e de saída em PDF
 - Botão para avisar o cliente pelo WhatsApp
+- Histórico dos serviços entregues no mês com os valores (fica na tela de Usuários)
 - Funciona no computador e no celular
 
 ## Tecnologias
