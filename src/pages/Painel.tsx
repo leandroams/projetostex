@@ -44,15 +44,15 @@ export default function Painel() {
       </div>
 
       <div className="mb-6 grid grid-cols-3 gap-3">
-        <Link to="/os?status=em_analise" className="cartao border-t-4 border-blue-500 text-center hover:shadow-md">
+        <Link to="/os?status=em_analise" className="cartao border-t-4 border-t-blue-500 text-center hover:shadow-md">
           <p className="text-4xl font-bold text-blue-600">{emAnalise.length}</p>
           <p className="text-sm text-gray-600">Em Análise</p>
         </Link>
-        <Link to="/os?status=aguardando_peca" className="cartao border-t-4 border-yellow-500 text-center hover:shadow-md">
+        <Link to="/os?status=aguardando_peca" className="cartao border-t-4 border-t-yellow-500 text-center hover:shadow-md">
           <p className="text-4xl font-bold text-yellow-600">{aguardando.length}</p>
           <p className="text-sm text-gray-600">Aguardando Peça</p>
         </Link>
-        <Link to="/os?status=pronto" className="cartao border-t-4 border-green-500 text-center hover:shadow-md">
+        <Link to="/os?status=pronto" className="cartao border-t-4 border-t-green-500 text-center hover:shadow-md">
           <p className="text-4xl font-bold text-green-600">{prontas.length}</p>
           <p className="text-sm text-gray-600">Prontos</p>
         </Link>
@@ -60,8 +60,8 @@ export default function Painel() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div>
-          <h2 className="mb-2 text-lg font-bold">Na bancada</h2>
-          <div className="cartao p-0">
+          <h2 className="subtitulo">Na bancada</h2>
+          <div className="cartao-lista">
             {naBancada.length === 0 ? (
               <p className="p-4 text-gray-500">Nenhum aparelho na bancada.</p>
             ) : (
@@ -71,8 +71,8 @@ export default function Painel() {
         </div>
 
         <div>
-          <h2 className="mb-2 text-lg font-bold">Prontos para retirada</h2>
-          <div className="cartao p-0">
+          <h2 className="subtitulo">Prontos para retirada</h2>
+          <div className="cartao-lista">
             {prontas.length === 0 ? (
               <p className="p-4 text-gray-500">Nenhum aparelho esperando o cliente.</p>
             ) : (

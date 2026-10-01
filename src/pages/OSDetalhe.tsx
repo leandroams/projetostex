@@ -7,7 +7,7 @@ import { FORMAS_PAGAMENTO } from '../empresa'
 import { gerarPDF } from '../pdf'
 import { emailParaUsuario } from '../supabase'
 import type { Historico, OrdemServico, Status } from '../tipos'
-import { dataHora, linkWhatsApp, moeda, numOS, PROXIMOS, STATUS, telefone, textoBotaoStatus, textoParaValor, valorParaTexto } from '../utils'
+import { dataHora, LISTA_STATUS, linkWhatsApp, moeda, numOS, PROXIMOS, STATUS, telefone, textoBotaoStatus, textoParaValor, valorParaTexto } from '../utils'
 
 export default function OSDetalhe() {
   const { id } = useParams()
@@ -169,6 +169,7 @@ export default function OSDetalhe() {
 
   const cliente = os.aparelho.cliente
   const entregue = os.status === 'entregue'
+  const etapaAtual = LISTA_STATUS.indexOf(os.status)
 
   return (
     <div>
@@ -186,7 +187,22 @@ export default function OSDetalhe() {
 
       {/* ---------- status ---------- */}
       <div className="cartao mb-4">
-        <h2 className="mb-2 text-lg font-bold">Mudar status</h2>
+        <h2 className="subtitulo">Andamento</h2>
+
+        {/* as 4 etapas: as que já passaram ficam azuis e a atual fica mais escura */}
+        <div className="mb-4 grid grid-cols-4 gap-1 text-center text-xs sm:text-sm">
+          {LISTA_STATUS.map((s, i) => {
+            let classe = 'bg-gray-200 text-gray-500'
+            if (i < etapaAtual) classe = 'bg-blue-200 text-blue-900'
+            if (i === etapaAtual) classe = 'bg-blue-700 font-bold text-white'
+            return (
+              <div key={s} className={'rounded px-1 py-2 ' + classe}>
+                {i + 1}. {STATUS[s].nome}
+              </div>
+            )
+          })}
+        </div>
+
         <div className="flex flex-wrap gap-2">
           {PROXIMOS[os.status].map((s) => (
             <button key={s} className={s === 'pronto' || s === 'entregue' ? 'botao' : 'botao-cinza'} onClick={() => abrirJanelaStatus(s)}>
@@ -268,7 +284,7 @@ export default function OSDetalhe() {
         {/* ---------- coluna da direita ---------- */}
         <div className="space-y-4">
           <div className="cartao">
-            <h2 className="mb-2 text-lg font-bold">Cliente</h2>
+            <h2 className="subtitulo">Cliente</h2>
             <Link to={'/clientes/' + cliente.id} className="font-semibold text-blue-700 hover:underline">
               {cliente.nome}
             </Link>
@@ -289,7 +305,7 @@ export default function OSDetalhe() {
           </div>
 
           <div className="cartao">
-            <h2 className="mb-2 text-lg font-bold">Comprovantes (PDF)</h2>
+            <h2 className="subtitulo">Comprovantes (PDF)</h2>
             <button className="botao-cinza mb-2 w-full" onClick={() => gerarPDF('entrada', os)}>
               Comprovante de entrada
             </button>
@@ -300,7 +316,7 @@ export default function OSDetalhe() {
           </div>
 
           <div className="cartao">
-            <h2 className="mb-2 text-lg font-bold">Histórico</h2>
+            <h2 className="subtitulo">Histórico</h2>
             {historico.map((h) => (
               <div key={h.id} className="mb-3 border-l-2 border-gray-300 pl-3 text-sm">
                 <b>{h.status_anterior ? STATUS[h.status_anterior].nome + ' → ' + STATUS[h.status_novo].nome : 'OS aberta'}</b>

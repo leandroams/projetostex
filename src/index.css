@@ -1,39 +1,51 @@
 @import 'tailwindcss';
 
 body {
-  @apply bg-gray-100 text-gray-900;
+  @apply bg-slate-100 text-gray-900;
 }
 
 button {
   cursor: pointer;
 }
 
-/* classes que eu uso em várias telas */
+/* Classes que eu uso em várias telas.
+   Ficam dentro de @layer components para as classes do tailwind
+   conseguirem sobrescrever (ex: "cartao mb-4"). */
+@layer components {
+  .campo {
+    @apply w-full rounded-md border border-gray-300 bg-white px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none disabled:bg-gray-100;
+  }
 
-.campo {
-  @apply w-full rounded border border-gray-300 bg-white px-3 py-2 focus:border-blue-500 focus:outline-none disabled:bg-gray-100;
-}
+  .rotulo {
+    @apply mb-1 block text-sm font-medium text-gray-700;
+  }
 
-.rotulo {
-  @apply mb-1 block text-sm font-medium text-gray-700;
-}
+  .botao {
+    @apply inline-block rounded-md bg-blue-600 px-4 py-2 text-center font-medium text-white transition hover:bg-blue-700 disabled:opacity-50;
+  }
 
-.botao {
-  @apply inline-block rounded bg-blue-600 px-4 py-2 text-center font-medium text-white hover:bg-blue-700 disabled:opacity-50;
-}
+  .botao-cinza {
+    @apply inline-block rounded-md border border-gray-300 bg-white px-4 py-2 text-center font-medium text-gray-700 transition hover:bg-gray-100 disabled:opacity-50;
+  }
 
-.botao-cinza {
-  @apply inline-block rounded border border-gray-300 bg-white px-4 py-2 text-center font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50;
-}
+  .cartao {
+    @apply rounded-lg border border-gray-200 bg-white p-4 shadow-sm;
+  }
 
-.cartao {
-  @apply rounded-lg bg-white p-4 shadow;
-}
+  /* cartão sem espaço interno, usado nas listas */
+  .cartao-lista {
+    @apply overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm;
+  }
 
-.titulo {
-  @apply text-2xl font-bold;
-}
+  .titulo {
+    @apply text-2xl font-bold text-slate-800;
+  }
 
-.erro {
-  @apply mt-1 text-sm text-red-600;
+  .subtitulo {
+    @apply mb-2 text-lg font-bold text-slate-800;
+  }
+
+  .erro {
+    @apply mt-1 text-sm text-red-600;
+  }
 }

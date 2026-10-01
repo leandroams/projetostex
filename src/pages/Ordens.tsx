@@ -65,7 +65,7 @@ export default function Ordens() {
 
       {erro && <p className="erro">{erro}</p>}
 
-      <div className="cartao p-0">{carregando ? <p className="p-4">Carregando...</p> : <ListaOS ordens={ordens} />}</div>
+      <div className="cartao-lista">{carregando ? <p className="p-4">Carregando...</p> : <ListaOS ordens={ordens} />}</div>
     </div>
   )
 }

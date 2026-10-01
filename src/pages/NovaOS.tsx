@@ -112,7 +112,7 @@ export default function NovaOS() {
 
       {/* ---------- 1. cliente ---------- */}
       <div className="cartao mb-4">
-        <h2 className="mb-3 text-lg font-bold">1. Cliente</h2>
+        <h2 className="subtitulo">1. Cliente</h2>
 
         {cliente ? (
           <div className="flex items-center justify-between gap-2 rounded bg-gray-100 p-3">
@@ -157,7 +157,7 @@ export default function NovaOS() {
 
       {/* ---------- 2. aparelho ---------- */}
       <div className="cartao mb-4">
-        <h2 className="mb-3 text-lg font-bold">2. Aparelho</h2>
+        <h2 className="subtitulo">2. Aparelho</h2>
 
         {!cliente && <p className="text-gray-500">Escolha o cliente primeiro.</p>}
 

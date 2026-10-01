@@ -29,10 +29,13 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <form onSubmit={entrar} className="cartao w-full max-w-sm">
-        <h1 className="text-center text-3xl font-bold text-blue-700">STEX</h1>
-        <p className="mb-6 text-center text-gray-600">Assistência Técnica - Ordens de Serviço</p>
+    <div className="flex min-h-screen items-center justify-center bg-blue-800 p-4">
+      <form onSubmit={entrar} className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
+        <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-lg bg-blue-800 text-3xl font-bold text-white">
+          S
+        </div>
+        <h1 className="text-center text-2xl font-bold text-slate-800">STEX Assistência Técnica</h1>
+        <p className="mb-6 text-center text-gray-600">Sistema de Ordens de Serviço</p>
 
         <label className="rotulo" htmlFor="usuario">
           Usuário

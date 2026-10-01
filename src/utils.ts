@@ -2,11 +2,12 @@ import type { Status } from './tipos'
 
 // ---------- status da OS ----------
 
-export const STATUS: Record<Status, { nome: string; cor: string }> = {
-  em_analise: { nome: 'Em Análise', cor: 'bg-blue-100 text-blue-800' },
-  aguardando_peca: { nome: 'Aguardando Peça', cor: 'bg-yellow-100 text-yellow-800' },
-  pronto: { nome: 'Pronto', cor: 'bg-green-100 text-green-800' },
-  entregue: { nome: 'Entregue', cor: 'bg-gray-200 text-gray-700' },
+// cor = etiqueta do status, borda = faixa colorida na lista
+export const STATUS: Record<Status, { nome: string; cor: string; borda: string }> = {
+  em_analise: { nome: 'Em Análise', cor: 'bg-blue-100 text-blue-800', borda: 'border-blue-500' },
+  aguardando_peca: { nome: 'Aguardando Peça', cor: 'bg-yellow-100 text-yellow-800', borda: 'border-yellow-500' },
+  pronto: { nome: 'Pronto', cor: 'bg-green-100 text-green-800', borda: 'border-green-500' },
+  entregue: { nome: 'Entregue', cor: 'bg-gray-200 text-gray-700', borda: 'border-gray-400' },
 }
 
 export const LISTA_STATUS: Status[] = ['em_analise', 'aguardando_peca', 'pronto', 'entregue']

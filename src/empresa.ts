@@ -1,9 +1,9 @@
-// Dados da loja (aparecem no PDF)
+// Dados da loja (PDF)
 export const EMPRESA = {
   nome: 'STEX Assistência Técnica',
   cnpj: '33.131.985/0001-43',
   telefone: '(41) 98880-6498',
-  endereco: '',
+  endereco: 'R. Júlio Groth Elias, 1403 - Divinéia',
 }
 
 export const TIPOS_APARELHO = ['Celular', 'Notebook', 'Computador', 'Tablet', 'TV', 'Videogame', 'Monitor', 'Som', 'Outro']

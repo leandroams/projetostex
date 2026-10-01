@@ -115,7 +115,7 @@ export default function ClienteDetalhe() {
           + Aparelho
         </button>
       </div>
-      <div className="cartao mb-6 p-0">
+      <div className="cartao-lista mb-6">
         {aparelhos.length === 0 && <p className="p-4 text-gray-500">Nenhum aparelho cadastrado.</p>}
         {aparelhos.map((a) => (
           <div key={a.id} className="flex flex-wrap items-center gap-2 border-b border-gray-200 p-3 last:border-0">
@@ -139,8 +139,8 @@ export default function ClienteDetalhe() {
         ))}
       </div>
 
-      <h2 className="mb-2 text-lg font-bold">Ordens de serviço do cliente</h2>
-      <div className="cartao p-0">
+      <h2 className="subtitulo">Ordens de serviço do cliente</h2>
+      <div className="cartao-lista">
         <ListaOS ordens={ordens} />
       </div>
 

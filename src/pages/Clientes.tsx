@@ -54,7 +54,7 @@ export default function Clientes() {
 
       {erro && <p className="erro">{erro}</p>}
 
-      <div className="cartao p-0">
+      <div className="cartao-lista">
         {carregando && <p className="p-4">Carregando...</p>}
         {!carregando && clientes.length === 0 && <p className="p-4 text-gray-500">Nenhum cliente encontrado.</p>}
         {!carregando &&
@@ -62,9 +62,13 @@ export default function Clientes() {
             <Link
               key={c.id}
               to={'/clientes/' + c.id}
-              className="flex flex-wrap justify-between gap-2 border-b border-gray-200 p-3 last:border-0 hover:bg-gray-50"
+              className="flex items-center gap-3 border-b border-gray-200 p-3 last:border-0 hover:bg-slate-50"
             >
-              <b>{c.nome}</b>
+              {/* bolinha com a primeira letra do nome */}
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-800">
+                {c.nome.charAt(0).toUpperCase()}
+              </span>
+              <b className="flex-1">{c.nome}</b>
               <span className="text-gray-600">{telefone(c.telefone)}</span>
             </Link>
           ))}
