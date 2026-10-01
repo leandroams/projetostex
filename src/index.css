@@ -1,0 +1,39 @@
+@import 'tailwindcss';
+
+body {
+  @apply bg-gray-100 text-gray-900;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* classes que eu uso em várias telas */
+
+.campo {
+  @apply w-full rounded border border-gray-300 bg-white px-3 py-2 focus:border-blue-500 focus:outline-none disabled:bg-gray-100;
+}
+
+.rotulo {
+  @apply mb-1 block text-sm font-medium text-gray-700;
+}
+
+.botao {
+  @apply inline-block rounded bg-blue-600 px-4 py-2 text-center font-medium text-white hover:bg-blue-700 disabled:opacity-50;
+}
+
+.botao-cinza {
+  @apply inline-block rounded border border-gray-300 bg-white px-4 py-2 text-center font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50;
+}
+
+.cartao {
+  @apply rounded-lg bg-white p-4 shadow;
+}
+
+.titulo {
+  @apply text-2xl font-bold;
+}
+
+.erro {
+  @apply mt-1 text-sm text-red-600;
+}
