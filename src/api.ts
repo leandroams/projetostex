@@ -8,6 +8,10 @@ function tratarErro(error: { code?: string; message: string }) {
   if (error.code === '23503') {
     return new Error('Não dá para excluir: existe ordem de serviço ligada a esse cadastro.')
   }
+  // PGRST202 = a função ainda não existe no banco
+  if (error.code === 'PGRST202') {
+    return new Error('Falta rodar o arquivo supabase/usuarios.sql no Supabase (só uma vez).')
+  }
   if (error.message.includes('Failed to fetch')) {
     return new Error('Sem conexão com o servidor. Verifique a internet.')
   }
@@ -159,4 +163,35 @@ export async function listarHistorico(osId: string) {
     .order('criado_em', { ascending: false })
   if (error) throw tratarErro(error)
   return data as Historico[]
+}
+
+// ---------- usuários do sistema ----------
+// usam as funções do arquivo supabase/usuarios.sql
+
+export type Usuario = {
+  id: string
+  usuario: string
+  criado_em: string
+  ultimo_acesso: string | null
+}
+
+export async function listarUsuarios() {
+  const { data, error } = await supabase.rpc('listar_usuarios')
+  if (error) throw tratarErro(error)
+  return data as Usuario[]
+}
+
+export async function criarUsuario(usuario: string, senha: string) {
+  const { error } = await supabase.rpc('criar_usuario', { p_usuario: usuario, p_senha: senha })
+  if (error) throw tratarErro(error)
+}
+
+export async function trocarSenhaUsuario(id: string, senha: string) {
+  const { error } = await supabase.rpc('trocar_senha_usuario', { p_id: id, p_senha: senha })
+  if (error) throw tratarErro(error)
+}
+
+export async function excluirUsuario(id: string) {
+  const { error } = await supabase.rpc('excluir_usuario', { p_id: id })
+  if (error) throw tratarErro(error)
 }

@@ -7,6 +7,7 @@ do curso de Análise e Desenvolvimento de Sistemas.
 ## O que tem no sistema
 
 - Login com usuário e senha
+- Cadastro de usuários pelo próprio sistema
 - Cadastro de clientes e dos aparelhos de cada cliente
 - Abertura de OS com o defeito relatado
 - Controle de status: Em Análise, Aguardando Peça, Pronto e Entregue
@@ -41,17 +42,23 @@ Depois é só abrir http://localhost:5173
 
 1. Criar um projeto no https://supabase.com
 2. No SQL Editor, colar e rodar o arquivo `supabase/schema.sql` (cria as tabelas)
-3. Copiar o arquivo `.env.example` com o nome `.env` e colocar a URL e a chave do projeto
+3. No SQL Editor, colar e rodar o arquivo `supabase/usuarios.sql` (cadastro de usuários)
+4. Copiar o arquivo `.env.example` com o nome `.env` e colocar a URL e a chave do projeto
    (ficam em Project Settings > API)
 
 ### Usuários
 
 O login é por nome de usuário. Como o Supabase só trabalha com e-mail, o sistema completa o
-usuário com `@stex.local` por trás. Então para criar um usuário:
+usuário com `@stex.local` por trás.
 
-1. No Supabase ir em Authentication > Users > Add user
+O primeiro usuário precisa ser criado no Supabase:
+
+1. Ir em Authentication > Users > Add user
 2. No e-mail colocar `usuario@stex.local` (exemplo: `adewerton@stex.local`)
 3. Colocar a senha e marcar "Auto Confirm User"
+
+Os outros são criados dentro do sistema, no menu **Usuários**. Lá também dá para trocar a
+senha e excluir um usuário.
 
 Na tela de login a pessoa digita só `adewerton` e a senha.
 

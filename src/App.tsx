@@ -9,6 +9,7 @@ import NovaOS from './pages/NovaOS'
 import OSDetalhe from './pages/OSDetalhe'
 import Clientes from './pages/Clientes'
 import ClienteDetalhe from './pages/ClienteDetalhe'
+import Usuarios from './pages/Usuarios'
 
 export default function App() {
   const [email, setEmail] = useState<string | null>(null)
@@ -44,7 +45,8 @@ export default function App() {
           <Route path="/os/:id" element={<OSDetalhe />} />
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/clientes/:id" element={<ClienteDetalhe />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/usuarios" element={<Usuarios />} />
+          <Route path="*"element={<Navigate to="/" />} />
         </Routes>
       </main>
     </div>

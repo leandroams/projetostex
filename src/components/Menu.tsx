@@ -13,6 +13,7 @@ export default function Menu({ email }: { email: string }) {
         <Link to="/" className="mr-4 flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-md bg-white text-lg font-bold text-blue-800">S</span>
           <span className="text-xl font-bold">STEX</span>
+          <span className="text-sm text-blue-100">Assistência Técnica</span>
         </Link>
 
         <NavLink to="/" end className={classeLink}>
@@ -23,6 +24,9 @@ export default function Menu({ email }: { email: string }) {
         </NavLink>
         <NavLink to="/clientes" className={classeLink}>
           Clientes
+        </NavLink>
+        <NavLink to="/usuarios" className={classeLink}>
+          Usuários
         </NavLink>
 
         <div className="ml-auto flex items-center gap-3">
