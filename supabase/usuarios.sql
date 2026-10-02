@@ -1,13 +1,10 @@
--- ============================================================================
--- STEX - Cadastro de usuários pelo próprio sistema
+-- Funções para cadastrar usuários pelo próprio sistema (menu ADM)
 --
--- Rodar UMA vez no Supabase: SQL Editor > New query > colar tudo > Run.
--- Depois disso os usuários são criados na tela "Usuários" do sistema.
+-- Rodar uma vez no SQL Editor do Supabase.
 --
 -- O login do Supabase é por e-mail, então cada usuário vira
 -- "usuario@stex.local" por trás (ex: adewerton -> adewerton@stex.local).
 -- Só quem está logado no sistema consegue usar essas funções.
--- ============================================================================
 
 -- lista os usuários cadastrados
 create or replace function public.listar_usuarios()

@@ -1,18 +1,16 @@
--- ============================================================================
--- STEX Assistência Técnica — Banco de dados (Supabase / PostgreSQL)
+-- Banco de dados do sistema da STEX (Supabase / PostgreSQL)
 --
--- Como usar: Supabase > SQL Editor > New query > cole este arquivo > Run.
--- O script pode ser executado mais de uma vez sem apagar dados.
+-- Para usar: no Supabase abrir o SQL Editor, colar este arquivo e clicar em Run.
+-- Pode rodar mais de uma vez que não apaga os dados.
 --
--- Modelo relacional:  clientes 1─N aparelhos 1─N ordens_servico 1─N os_historico
--- ============================================================================
+-- Tabelas: clientes -> aparelhos -> ordens_servico -> os_historico
+-- (um cliente tem vários aparelhos, um aparelho tem várias OS)
 
+-- extensão para a busca funcionar sem acento
 create schema if not exists extensions;
 create extension if not exists unaccent with schema extensions;
 
--- ---------------------------------------------------------------------------
--- Tipos
--- ---------------------------------------------------------------------------
+-- status possíveis da OS
 do $$
 begin
   create type public.status_os as enum ('em_analise', 'aguardando_peca', 'pronto', 'entregue');
@@ -20,9 +18,8 @@ exception
   when duplicate_object then null;
 end $$;
 
--- ---------------------------------------------------------------------------
--- Tabelas
--- ---------------------------------------------------------------------------
+-- ---------- tabelas ----------
+
 create table if not exists public.clientes (
   id          uuid primary key default gen_random_uuid(),
   nome        text not null check (length(trim(nome)) > 0),
@@ -36,7 +33,7 @@ create table if not exists public.clientes (
 
 create table if not exists public.aparelhos (
   id           uuid primary key default gen_random_uuid(),
-  -- Excluir um cliente apaga seus aparelhos, desde que nenhum tenha OS (ver FK abaixo).
+  -- se excluir o cliente apaga os aparelhos dele junto
   cliente_id   uuid not null references public.clientes (id) on delete cascade,
   tipo         text not null check (length(trim(tipo)) > 0),
   marca        text not null check (length(trim(marca)) > 0),
@@ -49,7 +46,7 @@ create table if not exists public.aparelhos (
 create table if not exists public.ordens_servico (
   id                 uuid primary key default gen_random_uuid(),
   numero             bigint generated always as identity unique,
-  -- "restrict": aparelho (e, por consequência, cliente) com OS não pode ser excluído.
+  -- restrict: não deixa excluir aparelho (nem cliente) que já tem OS
   aparelho_id        uuid not null references public.aparelhos (id) on delete restrict,
   status             public.status_os not null default 'em_analise',
   defeito_relatado   text not null check (length(trim(defeito_relatado)) > 0),
@@ -84,15 +81,15 @@ create index if not exists ordens_servico_status_idx on public.ordens_servico (s
 create index if not exists ordens_servico_aberta_em_idx on public.ordens_servico (aberta_em desc);
 create index if not exists os_historico_os_id_idx on public.os_historico (os_id, criado_em);
 
--- ---------------------------------------------------------------------------
--- Máquina de status da OS
+-- ---------- regras de status da OS ----------
 --
---   em_analise ⇄ aguardando_peca
---   em_analise | aguardando_peca → pronto
---   pronto → entregue        (exige valor final)
---   pronto → em_analise      (voltou para a bancada)
---   entregue → pronto        (desfazer entrega registrada por engano)
--- ---------------------------------------------------------------------------
+-- Mudanças permitidas:
+--   em_analise      -> aguardando_peca ou pronto
+--   aguardando_peca -> em_analise ou pronto
+--   pronto          -> entregue (precisa do valor final) ou em_analise
+--   entregue        -> pronto (para desfazer uma entrega marcada errado)
+
+-- toda OS nova começa em análise
 create or replace function public.os_antes_de_inserir()
 returns trigger
 language plpgsql
@@ -103,6 +100,7 @@ begin
   return new;
 end $$;
 
+-- confere se a mudança de status é permitida antes de salvar
 create or replace function public.os_antes_de_atualizar()
 returns trigger
 language plpgsql
@@ -136,8 +134,8 @@ begin
   return new;
 end $$;
 
--- Grava o histórico a cada abertura / mudança de status. Roda como "security definer"
--- para que o histórico só possa ser escrito por aqui (usuários têm apenas leitura).
+-- grava o histórico quando a OS é aberta e quando muda de status
+-- (security definer porque os usuários só têm permissão de leitura no histórico)
 create or replace function public.os_registrar_historico()
 returns trigger
 language plpgsql
@@ -174,8 +172,8 @@ create trigger os_registrar_historico
   after insert or update on public.ordens_servico
   for each row execute function public.os_registrar_historico();
 
--- Muda o status (e, na entrega, grava valor final / pagamento / garantia) em uma
--- única transação, levando a observação para o histórico.
+-- função que o sistema chama para mudar o status
+-- na entrega grava também o valor final, o pagamento e a garantia
 create or replace function public.mudar_status_os(
   p_os_id           uuid,
   p_novo_status     public.status_os,
@@ -210,9 +208,9 @@ begin
   return v_os;
 end $$;
 
--- ---------------------------------------------------------------------------
--- Views de listagem (com coluna "busca" sem acentos, para a pesquisa)
--- ---------------------------------------------------------------------------
+-- ---------- views usadas nas listas ----------
+-- a coluna "busca" junta os campos em minúsculo e sem acento para a pesquisa
+
 create or replace view public.vw_clientes
 with (security_invoker = true) as
 select
@@ -239,9 +237,9 @@ from public.ordens_servico o
 join public.aparelhos a on a.id = o.aparelho_id
 join public.clientes c on c.id = a.cliente_id;
 
--- ---------------------------------------------------------------------------
--- Segurança: só usuários autenticados (login) acessam os dados
--- ---------------------------------------------------------------------------
+-- ---------- segurança ----------
+-- só quem fez login consegue ler e gravar os dados
+
 alter table public.clientes       enable row level security;
 alter table public.aparelhos      enable row level security;
 alter table public.ordens_servico enable row level security;

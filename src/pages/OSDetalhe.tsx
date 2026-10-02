@@ -174,7 +174,7 @@ export default function OSDetalhe() {
   return (
     <div>
       <Link to="/os" className="text-blue-700 hover:underline">
-        &larr; Voltar
+        Voltar
       </Link>
 
       <div className="my-4 flex flex-wrap items-center gap-3">
@@ -319,7 +319,7 @@ export default function OSDetalhe() {
             <h2 className="subtitulo">Histórico</h2>
             {historico.map((h) => (
               <div key={h.id} className="mb-3 border-l-2 border-gray-300 pl-3 text-sm">
-                <b>{h.status_anterior ? STATUS[h.status_anterior].nome + ' → ' + STATUS[h.status_novo].nome : 'OS aberta'}</b>
+                <b>{h.status_anterior ? STATUS[h.status_anterior].nome + ' para ' + STATUS[h.status_novo].nome : 'OS aberta'}</b>
                 {h.status_anterior && h.observacao && <p>{h.observacao}</p>}
                 <p className="text-gray-500">
                   {dataHora(h.criado_em)} - {emailParaUsuario(h.usuario_email)}

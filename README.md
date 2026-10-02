@@ -14,7 +14,7 @@ do curso de Análise e Desenvolvimento de Sistemas.
 - Histórico das mudanças de status
 - Comprovante de entrada e de saída em PDF
 - Botão para avisar o cliente pelo WhatsApp
-- Histórico dos serviços entregues no mês com os valores (fica na tela de Usuários)
+- Histórico dos serviços entregues no mês com os valores (fica no menu ADM)
 - Funciona no computador e no celular
 
 ## Tecnologias
@@ -44,8 +44,12 @@ Depois é só abrir http://localhost:5173
 1. Criar um projeto no https://supabase.com
 2. No SQL Editor, colar e rodar o arquivo `supabase/schema.sql` (cria as tabelas)
 3. No SQL Editor, colar e rodar o arquivo `supabase/usuarios.sql` (cadastro de usuários)
-4. Copiar o arquivo `.env.example` com o nome `.env` e colocar a URL e a chave do projeto
-   (ficam em Project Settings > API)
+4. Criar um arquivo `.env` na pasta do projeto com a URL e a chave do projeto
+   (ficam em Project Settings > API):
+
+```nVITE_SUPABASE_URL=https://xxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=chave-publica-do-projeto
+```
 
 ### Usuários
 
@@ -58,7 +62,7 @@ O primeiro usuário precisa ser criado no Supabase:
 2. No e-mail colocar `usuario@stex.local` (exemplo: `adewerton@stex.local`)
 3. Colocar a senha e marcar "Auto Confirm User"
 
-Os outros são criados dentro do sistema, no menu **Usuários**. Lá também dá para trocar a
+Os outros são criados dentro do sistema, no menu **ADM**. Lá também dá para trocar a
 senha e excluir um usuário.
 
 Na tela de login a pessoa digita só `adewerton` e a senha.

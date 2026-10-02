@@ -2,7 +2,5 @@ node_modules
 dist
 .env
 .vercel
-.claude
-_backup_versao_anterior
 *.log
 *.tsbuildinfo

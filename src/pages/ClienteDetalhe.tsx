@@ -65,7 +65,7 @@ export default function ClienteDetalhe() {
   return (
     <div>
       <Link to="/clientes" className="text-blue-700 hover:underline">
-        &larr; Voltar
+        Voltar
       </Link>
 
       <div className="my-4 flex flex-wrap items-center justify-between gap-2">

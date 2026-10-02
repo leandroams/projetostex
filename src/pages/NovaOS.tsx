@@ -87,6 +87,11 @@ export default function NovaOS() {
       return
     }
 
+    if (orcamento.trim() !== '' && textoParaValor(orcamento) == null) {
+      setErro('Valor do orçamento inválido.')
+      return
+    }
+
     setSalvando(true)
     try {
       const id = await abrirOS({
@@ -106,7 +111,7 @@ export default function NovaOS() {
   return (
     <div className="mx-auto max-w-2xl">
       <Link to="/os" className="text-blue-700 hover:underline">
-        &larr; Voltar
+        Voltar
       </Link>
       <h1 className="titulo my-4">Nova Ordem de Serviço</h1>
 

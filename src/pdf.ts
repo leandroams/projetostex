@@ -10,7 +10,16 @@ export function gerarPDF(tipo: 'entrada' | 'saida', os: OrdemServico) {
   const cliente = aparelho.cliente
   let y = 20 // posição vertical, vou somando a cada linha
 
+  // se não couber mais na folha, começa outra página
+  function conferirEspaco(altura: number) {
+    if (y + altura > 280) {
+      doc.addPage()
+      y = 20
+    }
+  }
+
   function secao(titulo: string) {
+    conferirEspaco(20)
     y += 4
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(11)
@@ -22,10 +31,12 @@ export function gerarPDF(tipo: 'entrada' | 'saida', os: OrdemServico) {
   // escreve "Rótulo: valor" e quebra a linha se o texto for grande
   function campo(rotulo: string, valor: string | null) {
     doc.setFontSize(10)
+    doc.setFont('helvetica', 'normal')
+    const linhas = doc.splitTextToSize(valor || '-', 135)
+    conferirEspaco(linhas.length * 5 + 1)
     doc.setFont('helvetica', 'bold')
     doc.text(rotulo + ':', 15, y)
     doc.setFont('helvetica', 'normal')
-    const linhas = doc.splitTextToSize(valor || '-', 135)
     doc.text(linhas, 58, y)
     y += linhas.length * 5 + 1
   }
