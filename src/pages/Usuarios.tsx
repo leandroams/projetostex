@@ -115,7 +115,7 @@ export default function Usuarios() {
             <label className="rotulo">Usuário *</label>
             <input
               className="campo"
-              placeholder="Ex: adewerton"
+              placeholder="Ex: fulano"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               autoCapitalize="none"
